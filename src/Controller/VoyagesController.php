@@ -6,7 +6,8 @@
  */
 
 namespace App\Controller;
- 
+
+use App\Repository\VisiteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\route;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +17,23 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author jb_mu
  */
-class VoyagesController extends AbstractController  {
+class VoyagesController extends AbstractController
+{
+    private VisiteRepository $repository;
+
+    public function __construct(VisiteRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     #[Route('/voyages', name: 'voyages')]
-    public function index(): Response {
-        return $this->render("pages/voyages.html.twig");
-        
+    public function index(): Response
+    {
+        // Exemple d'utilisation du repository
+        // $visites = $this->repository->findAll();
+        $visites = $this->repository->findAll(); 
+        return $this->render('pages/voyages.html.twig', [
+            'visites' => $visites
+        ]);
     }
 }
