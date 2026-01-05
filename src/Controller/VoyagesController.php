@@ -50,4 +50,13 @@ public function findallequal($champ, Request $request): Response{
     $visites = $this->repository->findByEqualValue($champ, $valeur);
     return $this->render("pages/voyages.html.twig", ['visites'=> $visites]);
 }
+
+#[Route('/voyages/{id}', name: 'voyages.showone')]
+ public function showone($id) : Response {
+    $visite = $this->repository->find($id);
+    return $this->render("pages/voyage.html.twig", [
+        'visite' => $visite
+    ]);
+     
+ }
 }
