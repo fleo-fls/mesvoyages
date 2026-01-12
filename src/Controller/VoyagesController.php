@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Visite;
 
 /**
  * Description of AcceuilController
@@ -51,12 +52,18 @@ public function findallequal($champ, Request $request): Response{
     return $this->render("pages/voyages.html.twig", ['visites'=> $visites]);
 }
 
-#[Route('/voyages/{id}', name: 'voyages.showone')]
- public function showone($id) : Response {
-    $visite = $this->repository->find($id);
-    return $this->render("pages/voyage.html.twig", [
+#[Route(
+    '/voyages/{id}',
+    name: 'voyages.showone',
+    requirements: ['id' => '\d+']
+)]
+public function showone(Visite $visite): Response
+{
+    return $this->render('pages/voyage.html.twig', [
         'visite' => $visite
     ]);
+}
+
+
      
  }
-}
