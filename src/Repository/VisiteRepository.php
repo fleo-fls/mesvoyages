@@ -52,6 +52,8 @@ class VisiteRepository extends ServiceEntityRepository
 
     /**
      * Supprime une visite
+     * @param Visite $visite
+     * @return void
      */
     public function remove(Visite $visite): void
     {
