@@ -29,8 +29,18 @@
                 
             </div>
 
-            <div class="col">
-                <!-- emplacement photo -->
+            
+                <div class="col">
+                    {% if visite.imageName %}
+                        <img
+                            src="{{ asset('images/visites/' ~ visite.imageName) }}"
+                            alt="Photo de {{ visite.ville }}"
+                            class="img-fluid rounded">
+                    {% else %}
+                        <div class="text-muted">Aucune image</div>
+                    {% endif %}
+                </div>
+
             </div>
         </div>
 

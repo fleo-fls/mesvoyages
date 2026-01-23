@@ -2,15 +2,15 @@
 
 namespace App\Form;
 
+use App\Entity\Environnement;
 use App\Entity\Visite;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use DateTime;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\Environnement;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class VisiteType extends AbstractType
 {
@@ -21,32 +21,29 @@ class VisiteType extends AbstractType
             ->add('pays')
             ->add('datecreation', DateType::class, [
                 'widget' => 'single_text',
-                'data' => isset($options['data']) && 
-                $options['data']->getDateCreation() != null ? $options['data']->getDateCreation() : new DateTime('now'),
-                'label' => 'date'             
+                'label' => 'date',
             ])
             ->add('note')
             ->add('avis')
-            ->add('tempmin',null, [
-                'label' => 't°min'
-            ])
-            ->add('tempmax', null, [
-                'label' => 't°max'
-            ])           
-            ->add('environnements', EntityType::class,[
-                'class'=>Environnement::class,
+            ->add('tempmin', null, ['label' => 't°min'])
+            ->add('tempmax', null, ['label' => 't°max'])
+            ->add('environnements', EntityType::class, [
+                'class' => Environnement::class,
                 'choice_label' => 'nom',
                 'multiple' => true,
                 'required' => false,
-                
             ])
-                
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'label' => 'Sélection image',
+                'download_uri' => false,
+                'allow_delete' => true,
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
-            ])
-            
-        ;
+            ]);
     }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

@@ -7,7 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Attribute as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+
+
+
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: VisiteRepository::class)]
 class Visite
 {
@@ -15,6 +23,24 @@ class Visite
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    
+    #[Vich\UploadableField(mapping: 'visites', fileNameProperty: 'imageName', size: 'imageSize')]
+    #[Assert\Image(
+    mimeTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'],
+    mimeTypesMessage: 'Formats autorisés : jpeg, png, gif, svg.')]
+
+    private ?File $imageFile = null;
+
+    // NOTE: This field and the next one need to be nullable, otherwise the deletion won't work
+    //       if you want non-nullable fields, set the "erase_fields" option to false in the mapping config
+    #[ORM\Column(nullable: true)]
+    private ?string $imageName = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $imageSize = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(length: 25)]
     private ?string $ville = null;
@@ -77,7 +103,7 @@ class Visite
         return $this;
     }
 
-    public function getDatecreation(): ?\DateTime
+    public function getDateCreation(): ?\DateTime
     {
         return $this->datecreation;
     }
@@ -90,7 +116,7 @@ class Visite
     }
 
 
-    public function setDatecreation(?\DateTime $datecreation): static
+    public function setDateCreation(?\DateTime $datecreation): static
     {
         $this->datecreation = $datecreation;
 
@@ -168,4 +194,52 @@ class Visite
 
         return $this;
     }
+    
+    public function getImageFile(): ?File {
+        return $this->imageFile;
+    }
+
+    public function getImageName(): ?string {
+        return $this->imageName;
+    }
+
+    public function getImageSize(): ?int {
+        return $this->imageSize;
+    }
+
+      public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function setImageName(?string $imageName): void {
+        $this->imageName = $imageName;
+    }
+
+    public function setImageSize(?int $imageSize): void {
+        $this->imageSize = $imageSize;
+    }
+    
+    #[Assert\Callback]
+    public function validate(ExecutionContextInterface $context){
+        $file = $this->getImageFile();
+        if($file != null&& $file!= ""){
+            $poids = @filesize($file);
+            if($poids != false && $poids > 512000 ){
+                $context->buildViolation("Cette image est trop lourde (500ko max)")
+                        ->atPath('imageFile')
+                        ->addViolation();
+            }
+        }
+        
+    }
+            
+
+
 }
