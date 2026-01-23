@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Nouveau message de contact</title>
+</head>
+<body style="margin:0; padding:0; background-color:#f4f6f8; font-family: Arial, Helvetica, sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f6f8; padding:20px;">
+    <tr>
+        <td align="center">
+
+            <!-- Carte principale -->
+            <table width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+                
+                <!-- Header -->
+                <tr>
+                    <td style="background-color:#2563eb; padding:20px; border-radius:10px 10px 0 0;">
+                        <h2 style="margin:0; color:#ffffff; text-align:center;">
+                            📩 Nouveau message de contact
+                        </h2>
+                    </td>
+                </tr>
+
+                <!-- Contenu -->
+                <tr>
+                    <td style="padding:25px; color:#333333;">
+
+                        <p style="margin:0 0 10px 0;">
+                            <strong>Nom :</strong><br>
+                            {{ contact.nom }}
+                        </p>
+
+                        <p style="margin:0 0 10px 0;">
+                            <strong>Email :</strong><br>
+                            <a href="mailto:{{ contact.email }}" style="color:#2563eb; text-decoration:none;">
+                                {{ contact.email }}
+                            </a>
+                        </p>
+
+                        <hr style="border:none; border-top:1px solid #e5e7eb; margin:20px 0;">
+
+                        <p style="margin:0 0 8px 0;">
+                            <strong>Message :</strong>
+                        </p>
+
+                        <div style="background-color:#f9fafb; padding:15px; border-radius:6px; line-height:1.6;">
+                            {{ contact.message|nl2br }}
+                        </div>
+
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td style="background-color:#f1f5f9; padding:15px; border-radius:0 0 10px 10px; text-align:center; font-size:12px; color:#64748b;">
+                        Message envoyé depuis le formulaire de contact du site
+                    </td>
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
