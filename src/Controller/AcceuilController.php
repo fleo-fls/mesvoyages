@@ -1,25 +1,28 @@
 <?php
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/PHPClass.php to edit this template
- */
-
 namespace App\Controller;
- 
+
+use App\Repository\VisiteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Description of AcceuilController
- *
- * @author jb_mu
- */
-class AcceuilController extends AbstractController {
+class AcceuilController extends AbstractController
+{
+    private VisiteRepository $visiteRepository;
+
+    public function __construct(VisiteRepository $visiteRepository)
+    {
+        $this->visiteRepository = $visiteRepository;
+    }
+
     #[Route('/', name: 'accueil')]
-    public function index(): Response {
-        return $this->render("pages/acceuil.html.twig");
-        
+    public function index(): Response
+    {
+        $visites = $this->visiteRepository->findAllOrderBy('datecreation', 'DESC');
+
+        return $this->render('pages/acceuil.html.twig', [
+            'lastVisites' => array_slice($visites, 0, 2),
+        ]);
     }
 }

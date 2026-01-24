@@ -47,9 +47,12 @@ public function sort($champ, $ordre): Response{
 
 #[Route('/voyages/recherche/{champ}', name: 'voyages.findallequal')]
 public function findallequal($champ, Request $request): Response{
-    $valeur = $request->get("recherche");
-    $visites = $this->repository->findByEqualValue($champ, $valeur);
-    return $this->render("pages/voyages.html.twig", ['visites'=> $visites]);
+    if($this->isCsrfTokenValid('filtre_', $champ, $request->get('_token'))){
+        $valeur = $request->get("recherche");
+        $visites = $this->repository->findByEqualValue($champ, $valeur);
+        return $this->render("pages/voyages.html.twig", ['visites'=> $visites]);
+    }
+    return $this->redirectToRoute("voyages");
 }
 
 #[Route(
