@@ -45,7 +45,7 @@ class VisiteRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('v')
             ->where('v.' . $champ . ' = :valeur')
             ->setParameter('valeur', $valeur)
-            ->orderBy('v.datecreation', 'DESC')
+            ->orderBy('v.dateCreation', 'DESC')
             ->getQuery()
             ->getResult();
     }

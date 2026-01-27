@@ -19,7 +19,7 @@ class AcceuilController extends AbstractController
     #[Route('/', name: 'accueil')]
     public function index(): Response
     {
-        $visites = $this->visiteRepository->findAllOrderBy('datecreation', 'DESC');
+        $visites = $this->visiteRepository->findAllOrderBy('dateCreation', 'DESC');
 
         return $this->render('pages/acceuil.html.twig', [
             'lastVisites' => array_slice($visites, 0, 2),

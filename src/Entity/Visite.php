@@ -49,9 +49,10 @@ class Visite
     private ?string $pays = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTime $datecreation = null;
+    private ?\DateTime $dateCreation = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(min:0, max:20)]
     private ?int $note = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -61,6 +62,7 @@ class Visite
     private ?int $tempmin = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\GreaterThan(propertyPath:"tempmin")]
     private ?int $tempmax = null;
 
     /**
@@ -105,20 +107,20 @@ class Visite
 
     public function getDateCreation(): ?\DateTime
     {
-        return $this->datecreation;
+        return $this->dateCreation;
     }
     
     public function getDateCreationString(): string
     {
-    return $this->datecreation
-        ? $this->datecreation->format('d/m/Y')
+    return $this->dateCreation
+        ? $this->dateCreation->format('d/m/Y')
         : '';
     }
 
 
-    public function setDateCreation(?\DateTime $datecreation): static
+    public function setDateCreation(?\DateTime $dateCreation): static
     {
-        $this->datecreation = $datecreation;
+        $this->dateCreation = $dateCreation;
 
         return $this;
     }

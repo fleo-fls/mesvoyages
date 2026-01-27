@@ -33,7 +33,7 @@ class VoyagesController extends AbstractController
     {
         // Exemple d'utilisation du repository
         // $visites = $this->repository->findAll();
-        $visites = $this->repository->findAllOrderBy('datecreation', 'DESC'); 
+        $visites = $this->repository->findAllOrderBy('dateCreation', 'DESC'); 
         return $this->render('pages/voyages.html.twig', [
             'visites' => $visites
         ]);
