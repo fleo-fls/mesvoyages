@@ -1,0 +1,14 @@
+Options -Indexes
+DirectoryIndex index.php index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Si on demande un fichier/dossier existant, on le sert
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Sinon, on envoie tout vers Symfony (dans /public)
+  RewriteRule ^ public/index.php [L]
+</IfModule>

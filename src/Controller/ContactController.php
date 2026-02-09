@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -38,11 +38,7 @@ class ContactController extends AbstractController
     {
         $email = (new Email())
             ->from($contact->getEmail())
-            ->to('contact@mesvoyages.com')
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            //->priority(Email::PRIORITY_HIGH)
+            ->to('contact@mesvoyages.ovh')
             ->subject('Message du site de voyages')
             ->html($this->renderView
                     ('pages/_email.html.twig',['contact' => $contact]
