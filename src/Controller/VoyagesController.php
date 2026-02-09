@@ -17,7 +17,8 @@ use App\Entity\Visite;
 /**
  * Description of VoyagesController
  *
- * @author jb_muller et CNED
+ * @author jb_muller et CNED 
+ * BTS SIO
  */
 class VoyagesController extends AbstractController
 {
