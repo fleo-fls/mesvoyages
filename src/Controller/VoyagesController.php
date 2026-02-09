@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Visite;
 
 /**
- * Description of AcceuilController
+ * Description of VoyagesController
  *
  * @author jb_muller
  */
