@@ -10,7 +10,7 @@ jobs:
     - name: Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.3.0
       with:
-        server: mesvoyh.cluster129.hosting.ovh.net
+        server: ftp://mesvoyh@ftp.cluster129.hosting.ovh.net/
         server-dir: www/mesvoyages/public
         username: mesvoyh
         password: ${{ secrets.ftp_password }}
