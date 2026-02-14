@@ -24,7 +24,7 @@ class AdminVoyagesController extends AbstractController
     #[Route('/admin', name: 'admin.voyages')]
     public function index(): Response
     {
-        $visites = $this->repository->findAllOrderBy('datecreation', 'DESC');
+        $visites = $this->repository->findAllOrderBy('dateCreation', 'DESC');
 
         return $this->render('admin/admin.voyages.html.twig', [
             'visites' => $visites
