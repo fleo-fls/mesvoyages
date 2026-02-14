@@ -31,10 +31,10 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link {% if app.request.attributes.get('_route') == 'voyages' %}active{% endif %}"
-             href="{{ path('voyages') }}">
+         <a class="nav-link {{ app.request.attributes.get('_route') == 'voyages' ? 'active' : '' }}"
+            href="{{ path('voyages') }}">
             Voyages
-          </a>
+         </a>
         </li>
 
         <li class="nav-item">
