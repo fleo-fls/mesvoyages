@@ -40,34 +40,31 @@ class VoyagesController extends AbstractController
         ]);
     }
     
-#[Route('/voyages/tri/{champ}/{ordre}', name: 'voyages.sort')]
-public function sort($champ, $ordre): Response{
-    $visites = $this->repository->findAllOrderBy($champ, $ordre);
-    return $this->render("pages/voyages.html.twig", ['visites'=> $visites]);
-}
-
-#[Route('/voyages/recherche/{champ}', name: 'voyages.findallequal')]
-public function findallequal($champ, Request $request): Response{
-    if($this->isCsrfTokenValid('filtre_', $champ, $request->get('_token'))){
-        $valeur = $request->get("recherche");
-        $visites = $this->repository->findByEqualValue($champ, $valeur);
+    #[Route('/voyages/tri/{champ}/{ordre}', name: 'voyages.sort')]
+        public function sort($champ, $ordre): Response{
+        $visites = $this->repository->findAllOrderBy($champ, $ordre);
         return $this->render("pages/voyages.html.twig", ['visites'=> $visites]);
     }
-    return $this->redirectToRoute("voyages");
-}
 
-#[Route(
-    '/voyages/{id}',
-    name: 'voyages.showone',
-    requirements: ['id' => '\d+']
-)]
-public function showone(Visite $visite): Response
-{
-    return $this->render('pages/voyage.html.twig', [
+    #[Route('/voyages/recherche/{champ}', name: 'voyages.findallequal')]
+        public function findallequal($champ, Request $request): Response{
+        if($this->isCsrfTokenValid('filtre_', $champ, $request->get('_token'))){
+            $valeur = $request->get("recherche");
+            $visites = $this->repository->findByEqualValue($champ, $valeur);
+            return $this->render("pages/voyages.html.twig", ['visites'=> $visites]);
+        }
+        return $this->redirectToRoute("voyages");
+    }
+
+    #[Route(
+        '/voyages/{id}',
+        name: 'voyages.showone',
+        requirements: ['id' => '\d+']
+    )]
+    public function showone(Visite $visite): Response
+    {
+        return $this->render('pages/voyage.html.twig', [
         'visite' => $visite
     ]);
+    }
 }
-
-
-     
- }
